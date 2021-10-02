@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta content="charset=UTF-8 content-type=text/xml">
+    <title>About Us</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;300&display=swap" rel="stylesheet">
+
+    <style>
+      .container {
+        
+        width: 1000px;
+        height: 600px;
+        background-image: url('../img/about_background.png');
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        
+      }
+ 
+      .center {
+        position: absolute;
+        top: 25%;
+        right: 30%;
+        left: 10%;
+        margin-left:none;
+        margin-right: none'
+        
+        
+      }
+      .center p {
+        color: white;
+        font-size: 1.25vw;
+      }
+
+    </style>
+  </head>
+  <body>
+    <!--Navigation bar-->
+    <div id="nav-placeholder"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script>
+      $(function(){
+        $("#nav-placeholder").load("nav.html", function() {
+          console.log('Load was performed');
+        });
+      });
+      </script>
+
+      <div class='container'>
+        
+        
+        <div class='center'>
+          <h4 style='color:white; font-size: 2vw'>About Us</h4>
+          <p>Melody Creators was created by Jessie Peng with the illustrations done by Michelle Peng. </p>
+          <p>In August 2018, Jessie interviewed and got the 'Classroom Assistant' position at Regent Park 
+          School of Music. Although originally, her motives were to attain volunteer hours this 
+          opportunity soon grew beyond that. From weekly sessions with teachers and students of all ages, 
+          she realized that it was not only her students' music abilities growing; her own passion 
+          for music and confidence in herself grew as well. Continue to volunteer since then, she will be finishing
+          her 2nd year as a 'Classroom Assistant'. </p>
+          <p>She hopes this website will be a resource for fellow musicians looking to rekindle their love for music,
+          beyond endless practising and performing, as well as people who want to take advantage of their musical
+          abilities to give back to the community! </p>
+        </div>
+      </div>
+      
+      
+
+  
+  </body>
+</html>
