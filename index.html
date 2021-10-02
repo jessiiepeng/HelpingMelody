@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta http-equiv="content-type" content="charset=UTF-8 content-type=text/xml">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="./css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;300&display=swap" rel="stylesheet">
+    <title>Melody Creators</title>
+    <style>
+      #map{
+        height: 600px;
+        width:80%;
+        margin: auto;
+      }
+      #search-input {
+        width:40%;
+        height: 5%;
+        margin:auto;
+      
+      }
+    </style>
+
+  </head>
+  <body>
+    <!--Navigation bar-->
+    <div id="nav-placeholder"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script>
+      $(function(){
+        $("#nav-placeholder").load("html/nav.html", function() {
+          console.log('Load was performed');
+        });
+      });
+      </script>
+
+    <!--Introduction blurb-->
+    <p style='font-size:1.25vw'>Melody Creators is dedicated to help musicians find
+    volunteering opportunities near them! Our goal
+    is to help students realize their potential
+    in sharing music in their communities as well as 
+   local music organizations.
+  </p>
+    <h4 style='font-size:2vw'>Let's get started:</h4>
+
+    <!--Autocomplete and Map initializing-->
+    <div id='map'></div>
+    <input id="search-input" class="controls" type="text" placeholder="Search near..." style='font-size: 1.25vw'>
+    <script>
+      function initAutocomplete() {
+        var options = {
+          zoom:10,
+          center:{lat:43.6532,lng:-79.3832},
+          mapTypeId: 'roadmap',
+          disableDefaultUI: true
+        }
+        // map code
+        var map = new google.maps.Map(document.getElementById('map'), options);
+
+        // autocomplete code
+        var input = document.getElementById('search-input');
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+        
+        var autocomplete = new google.maps.places.Autocomplete(input);
+        autocomplete.bindTo('bounds', map); 
+
+        autocomplete.addListener('place_changed', function() {
+          var place = autocomplete.getPlace();
+          if (!place.geometry) {
+            // user entered name of place not suggested + pressed enter
+            window.alert('No details available for input: ' + place.name);
+            return;
+          }
+
+          // if place has geometry, then present it on a map
+          if (place.geometry.viewport) {
+            map.fitBounds(place.geometry.viewport);
+          } else {
+            map.setCenter(place.geometry.location);
+            map.setZoom(17);
+          }
+        });
+
+        // infowindow code
+        
+        var infoWindow = new google.maps.InfoWindow();
+
+        downloadUrl('mapmarkers.php', function(data) {
+          var xml = data.responseXML;
+          if (xml == null) console.log("Null XML Error");
+          var markers = xml.documentElement.getElementsByTagName('marker');
+          if (markers == null) console.log("Marker null error");
+          Array.prototype.forEach.call(markers, function(markerElem) {
+            var id = markerElem.getAttribute('id');
+            var name = markerElem.getAttribute('name');
+            var address = markerElem.getAttribute('address');
+            var type = markerElem.getAttribute('type');
+            var point = new google.maps.LatLng(
+              parseFloat(markerElem.getAttribute('lat')),
+              parseFloat(markerElem.getAttribute('lng'))
+            );
+
+            var infowincontent = document.createElement('div');
+            var strong = document.createElement('strong');
+            strong.textContent = name;
+            infowincontent.appendChild(strong);
+            infowincontent.appendChild(document.createElement('br'));
+
+            var text = document.createElement('text');
+            text.textContent = address;
+            infowincontent.appendChild(text);
+            
+            var image = '/img/marker2.png';
+            var pinIcon = new google.maps.MarkerImage(
+              image,
+              null,
+              null,
+              null,
+              new google.maps.Size(60,45)
+            );
+            var marker = new google.maps.Marker({
+              map: map,
+              position: point,
+              icon: pinIcon
+            });
+            marker.addListener('click', function() {
+              infoWindow.setContent(infowincontent);
+              infoWindow.open(map, marker);
+            });
+          });
+        });
+        
+        
+      }
+
+      function downloadUrl(url, callback) {
+        var request = window.ActiveXObject ?
+          new ActiveXObject('Microsoft.XMLHTTP') :
+          new XMLHttpRequest();
+
+        request.onreadystatechange = function() {
+          if (request.readyState == 4) {
+            request.onreadystatechange = doNothing;
+            callback(request, request.status);
+          }
+        };
+      
+        request.open('GET', url, true);
+        request.send(null);
+      }
+
+      function doNothing() {}
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBvVXAhJc7naMdSqAYMUrWJ_Oe7MiKVVg&libraries=places&callback=initAutocomplete"
+         async defer></script>
+  </body>
+</html>
