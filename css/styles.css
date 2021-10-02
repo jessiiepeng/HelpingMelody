@@ -1,0 +1,45 @@
+* {
+    font-family: 'Raleway', sans-serif;
+}
+/* add padding to navbar */
+.px-7 {
+    padding-right: 8rem !important;
+    padding-left: 8rem !important;
+}
+
+/* change navigation bar color */
+.navbar-custom {
+    background-color: white !important;
+}
+
+/* change the brand and text color */
+.navbar-custom .navbar-brand,
+.navbar-custom .navbar-text {
+    color: #555555 !important;
+}
+/* change the link color */
+.navbar-custom .navbar-nav li a {
+    color: #555555 !important;
+}
+/* change hover over link color*/
+.navbar-custom .navbar-nav li a:hover {
+    color: #9AD0DC !important;
+}
+/* text padding */
+p {
+    padding-left: 10%;
+    padding-right: 10%;
+}
+h3 {
+    color: #F0996C;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+/* autocomplete font size of options*/
+.pac-item-query, .pac-item {
+    font-size:15px;
+  }
+
+
+
